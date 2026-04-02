@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Todo List</title>
+  <title>Todo List Pro</title>
   <style>
     body {
       font-family: Arial;
@@ -15,7 +15,7 @@
     .app {
       background: white;
       padding: 20px;
-      width: 400px;
+      width: 420px;
       border-radius: 10px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     }
@@ -29,9 +29,11 @@
       gap: 10px;
     }
 
-    input {
+    textarea {
       flex: 1;
       padding: 8px;
+      resize: none;
+      height: 40px;
     }
 
     button {
@@ -60,6 +62,11 @@
       border-radius: 5px;
     }
 
+    .task-text {
+      white-space: pre-line;
+      flex: 1;
+    }
+
     .actions button {
       margin-left: 5px;
     }
@@ -71,10 +78,10 @@
 <body>
 
 <div class="app">
-  <h2>Todo List</h2>
+  <h2>Todo List Pro 😎</h2>
 
   <div class="input-group">
-    <input type="text" id="taskInput" placeholder="Nhập việc cần làm...">
+    <textarea id="taskInput" placeholder="Enter"></textarea>
     <button class="add-btn" onclick="addTask()">Thêm</button>
   </div>
 
@@ -98,7 +105,7 @@
       const li = document.createElement("li");
 
       li.innerHTML = `
-        <span>${task}</span>
+        <span class="task-text">${task}</span>
         <div class="actions">
           <button class="edit-btn" onclick="editTask(${index})">Sửa</button>
           <button class="delete-btn" onclick="deleteTask(${index})">Xóa</button>
@@ -113,7 +120,7 @@
     const input = document.getElementById("taskInput");
     const value = input.value.trim();
 
-    if (!value) return alert("Nhập việc đi bro 😅");
+    if (!value) return;
 
     tasks.push(value);
     saveTasks();
@@ -145,7 +152,14 @@
     }
   }
 
-  // Load lần đầu
+  // 🔥 Enter = thêm | Shift+Enter = xuống dòng
+  document.getElementById("taskInput").addEventListener("keydown", function(e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      addTask();
+    }
+  });
+
   renderTasks();
 </script>
 
